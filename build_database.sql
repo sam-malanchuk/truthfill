@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 20, 2018 at 09:16 PM
+-- Generation Time: Aug 20, 2018 at 09:26 PM
 -- Server version: 5.6.39-cll-lve
 -- PHP Version: 5.6.30
 
@@ -19,84 +19,181 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `youth_dir_test`
+-- Database: `truthfill`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_views`
+-- Table structure for table `chats`
 --
 
-CREATE TABLE `table_views` (
-  `id` int(11) NOT NULL,
-  `name` text NOT NULL,
-  `table_values` longtext NOT NULL
+CREATE TABLE `chats` (
+  `chat_id` int(5) NOT NULL,
+  `message_id` int(5) NOT NULL,
+  `message_content` text NOT NULL,
+  `user_from` int(5) NOT NULL,
+  `user_to` int(5) NOT NULL,
+  `datestamp` text NOT NULL,
+  `chat_viewed` int(1) NOT NULL,
+  `user_to_new` int(1) NOT NULL DEFAULT '1',
+  `user_from_new` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `youth_dir`
+-- Table structure for table `likes`
 --
 
-CREATE TABLE `youth_dir` (
-  `ID` int(11) NOT NULL,
-  `lname` varchar(24) CHARACTER SET utf8 DEFAULT NULL,
-  `fname` varchar(18) CHARACTER SET utf8 DEFAULT NULL,
-  `bday` date DEFAULT NULL,
-  `tel` text NOT NULL,
-  `baptism` tinyint(1) NOT NULL,
-  `tmessages` tinyint(1) NOT NULL,
-  `choir` tinyint(1) NOT NULL,
-  `street` varchar(35) NOT NULL,
-  `city` varchar(15) NOT NULL,
-  `zipcode` int(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf32;
+CREATE TABLE `likes` (
+  `like_id` int(5) NOT NULL,
+  `m_id` int(5) NOT NULL,
+  `user_id` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `youth_dir`
+-- Table structure for table `messages`
 --
 
-INSERT INTO `youth_dir` (`ID`, `lname`, `fname`, `bday`, `tel`, `baptism`, `tmessages`, `choir`, `street`, `city`, `zipcode`) VALUES
-(1, 'Сусляков', 'Иммануил', '0000-00-00', '', 1, 1, 1, '', '', 0),
-(2, 'Поливанов', 'Аркадий', '0000-00-00', '', 0, 0, 0, '', '', 0),
-(15, 'Crayne', 'Icabad', '2018-04-16', '3333333', 0, 1, 1, '', '', 0),
-(8, 'Рудов', 'Борис', '2017-09-25', '', 1, 1, 0, '', '', 0),
-(10, 'Сергеев', 'Аркадий', '0000-00-00', '', 0, 0, 0, '', '', 0),
-(16, 'Malanchuk', 'Sam', '2018-03-04', '9802487983', 1, 0, 0, '', '', 0);
+CREATE TABLE `messages` (
+  `m_id` int(10) NOT NULL,
+  `m_content` text NOT NULL,
+  `m_date` text NOT NULL,
+  `m_status` int(1) NOT NULL,
+  `m_from` int(5) NOT NULL,
+  `m_to` int(5) NOT NULL,
+  `chat_on` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `rating_id` int(5) NOT NULL,
+  `user_id` int(5) NOT NULL,
+  `rated_by` int(5) NOT NULL,
+  `rating` int(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(10) NOT NULL,
+  `fullname` text NOT NULL,
+  `username` text NOT NULL,
+  `email` text NOT NULL,
+  `password` text NOT NULL,
+  `aboutme` mediumtext NOT NULL,
+  `profile_pic` text NOT NULL,
+  `b_color` text NOT NULL,
+  `confirm_id` text NOT NULL,
+  `confirm` tinyint(1) NOT NULL,
+  `login_hash` text NOT NULL,
+  `public_on` int(1) NOT NULL DEFAULT '1',
+  `creation_date` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_list`
+--
+
+CREATE TABLE `user_list` (
+  `list_item_id` int(5) NOT NULL,
+  `user_id` int(5) NOT NULL,
+  `added_by` int(5) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `table_views`
+-- Indexes for table `chats`
 --
-ALTER TABLE `table_views`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`chat_id`);
 
 --
--- Indexes for table `youth_dir`
+-- Indexes for table `likes`
 --
-ALTER TABLE `youth_dir`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`like_id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`m_id`);
+
+--
+-- Indexes for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`rating_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_list`
+--
+ALTER TABLE `user_list`
+  ADD PRIMARY KEY (`list_item_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `table_views`
+-- AUTO_INCREMENT for table `chats`
 --
-ALTER TABLE `table_views`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `chats`
+  MODIFY `chat_id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `youth_dir`
+-- AUTO_INCREMENT for table `likes`
 --
-ALTER TABLE `youth_dir`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+ALTER TABLE `likes`
+  MODIFY `like_id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `m_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `rating_id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_list`
+--
+ALTER TABLE `user_list`
+  MODIFY `list_item_id` int(5) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
